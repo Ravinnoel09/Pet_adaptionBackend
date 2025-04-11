@@ -1,0 +1,52 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Pets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../frontend/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">Pet Adoption</a>
+      <div>
+        <a href="adopt.html" class="btn btn-light me-2">Adopt</a>
+        <a href="view_request.html" class="btn btn-light">Requests</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <h2 class="mb-4 text-center">Available Pets</h2>
+    <div id="pet-list" class="row g-4">
+      <!-- Pets will be added here -->
+    </div>
+  </div>
+
+  <script>
+    fetch("http://127.0.0.1:5000/pets")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('pet-list');
+        data.forEach(pet => {
+          const card = document.createElement('div');
+          card.className = 'col-md-4';
+          card.innerHTML = `
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">${pet[1]}</h5>
+                <p class="card-text">Breed: ${pet[2]}</p>
+                <p class="card-text">Age: ${pet[3]} years</p>
+                <span class="badge bg-${pet[4] === 'Available' ? 'success' : 'secondary'}">${pet[4]}</span>
+              </div>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
