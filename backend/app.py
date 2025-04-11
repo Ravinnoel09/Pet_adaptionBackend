@@ -56,4 +56,5 @@ def view_requests(owner_id):
     return jsonify(requests)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Bind to 0.0.0.0 to make it accessible externally
+    app.run(host='0.0.0.0', port=5000, debug=True)
